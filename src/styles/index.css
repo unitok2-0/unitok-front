@@ -1,0 +1,199 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .header-nav-link {
+    @apply xl:text-base text-sm text-gray-dark hover:underline;
+  }
+  .header-nav-link-mobile {
+    @apply text-2xl leading-relaxed tracking-tight font-light;
+  }
+  .btn {
+    @apply bg-orange xl:px-7 px-6 py-3 rounded-3xl text-white text-center font-bold leading-none xl:text-base text-sm transition duration-200 ease-out hover:ease-in hover:bg-btn-hover;
+  }
+  .typ-text-1 {
+    @apply xl:text-7xl lg:text-6xlMin text-5xlMax leading-tight tracking-tight;
+  }
+  .typ-text-2 {
+    @apply md:text-5xl text-2xlMax md:leading-snug leading-tight tracking-tight;
+  }
+  .typ-text-3 {
+    @apply md:text-3xl text-2xl leading-normal tracking-tight;
+  }
+  .typ-text-4 {
+    @apply text-lg leading-normal tracking-tight;
+  }
+  .typ-p {
+    @apply text-sm md:leading-normal leading-relaxed tracking-tight;
+  }
+  .typ-p-sm {
+    @apply text-xs md:leading-normal leading-relaxed tracking-tight;
+  }
+  .typ-menu {
+    @apply text-base leading-normal tracking-tight;
+  }
+  .typ-tag {
+    @apply text-xxs leading-normal tracking-tight;
+  }
+  .footer-nav-link {
+    @apply text-xs text-white font-light hover:underline;
+  }  
+}
+
+@font-face {
+  font-family: 'GTMaru';
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url('../../public/public-new/fonts/gt-maru/GTMaru-Light.eot');
+  src: url('../../public/public-new/fonts/gt-maru/GTMaru-Light.eot?#iefix') format('embedded-opentype'), url('../../public/public-new/fonts/gt-maru/GTMaru-Light.woff2') format('woff2'),
+    url('../../public/public-new/fonts/gt-maru/GTMaru-Light.woff') format('woff'), url('../../public/public-new/fonts/gt-maru/GTMaru-Light.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'GTMaru';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('../../public/public-new/fonts/gt-maru/GTMaru-Regular.eot');
+  src: url('../../public/public-new/fonts/gt-maru/GTMaru-Regular.eot?#iefix') format('embedded-opentype'), url('../../public/public-new/fonts/gt-maru/GTMaru-Regular.woff2') format('woff2'),
+    url('../../public/public-new/fonts/gt-maru/GTMaru-Regular.woff') format('woff'), url('../../public/public-new/fonts/gt-maru/GTMaru-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'GTMaru';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('../../public/public-new/fonts/gt-maru/GTMaru-Medium.eot');
+  src: url('../../public/public-new/fonts/gt-maru/GTMaru-Medium.eot?#iefix') format('embedded-opentype'), url('../../public/public-new/fonts/gt-maru/GTMaru-Medium.woff2') format('woff2'),
+    url('../../public/public-new/fonts/gt-maru/GTMaru-Medium.woff') format('woff'), url('../../public/public-new/fonts/gt-maru/GTMaru-Medium.ttf') format('truetype');
+}
+
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1360px;
+  }
+}
+@media (min-width: 1024px) and (max-width: 1280px){
+  .container {
+      max-width: 992px;
+  }
+}
+@media (min-width: 992px) and (max-width: 1023px){
+  .container {
+    max-width: 100%;
+}
+}
+@media (min-width: 768px) and (max-width: 992px){
+  .container {
+      max-width: 992px;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  font-feature-settings: 'ss01';
+}
+
+body {
+  font-family: 'GTMaru';
+  
+  max-width: 2560px;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+.header .dropdown:hover .dropdown-list{
+  opacity: 1;
+}
+
+.slick-slider {
+  position: relative;
+  margin-top: 40px;
+}
+
+.slick-arrow {
+  position: absolute;
+  top: -40px;
+  right: 20px;
+  left: inherit;
+  width: 40px;
+  height: 40px;
+  transform: rotateX(0deg);
+  background-image: url('../../public/public-new/icons/ui/carousel-arrow.svg');
+}
+.slick-arrow:before {
+  display: none;
+}
+.slick-next:focus, .slick-next:hover, .slick-prev:focus, .slick-prev:hover {
+  background-image: url('../../public/public-new/icons/ui/carousel-arrow.svg');
+}
+.slick-prev {
+  right: 72px;
+  transform: rotateZ(180deg);
+}
+
+.slider-input::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #FF4C1C; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+  border-radius: 50%;
+}
+
+.scroll-bar-custom::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+.scroll-bar-custom::-webkit-scrollbar-track {
+  background: #0B6442; 
+}
+ 
+/* Handle */
+.scroll-bar-custom::-webkit-scrollbar-thumb {
+  background: #D4FEB2; 
+}
+
+/* Handle on hover */
+.scroll-bar-custom::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #FF4C1C; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #D14018; 
+}
+
+progress {
+  background-color: #fff;
+}
+progress::-webkit-progress-bar  {
+  background-color: transparent;
+  height: 2px;
+}
+progress::-webkit-progress-value {
+  background-color: #FF4C1C;
+  height: 10px;
+  margin-top: -2px;
+  border-radius: 10px;
+}

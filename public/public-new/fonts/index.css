@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'GTMaru';
+  font-feature-settings: 'ss01';
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url('gt-maru/GTMaru-Light.eot');
+  src: url('gt-maru/GTMaru-Light.eot?#iefix') format('embedded-opentype'), url('gt-maru/GTMaru-Light.woff2') format('woff2'),
+    url('gt-maru/GTMaru-Light.woff') format('woff'), url('fonts/gt-maru/GTMaru-Light.ttf') format('truetype');
+}

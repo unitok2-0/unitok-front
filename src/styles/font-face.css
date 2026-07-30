@@ -1,0 +1,18 @@
+@font-face {
+  font-family: "GT Maru";
+  font-style: normal;
+  font-weight: 300;
+  src: local(""), url("/fonts/GT-Maru-Light.woff2") format("woff2");
+}
+@font-face {
+  font-family: "GT Maru";
+  font-style: normal;
+  font-weight: 400;
+  src: local(""), url("/fonts/GT-Maru-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "GT Maru";
+  font-style: normal;
+  font-weight: 500;
+  src: local(""), url("/fonts/GT-Maru-Medium.woff2") format("woff2");
+}
