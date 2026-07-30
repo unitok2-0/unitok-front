@@ -1,6 +1,7 @@
 {
   "name": "adbat",
   "version": "0.1.1",
+  "description": "Unitok frontend",
   "private": true,
   "engines": {
     "node": "20.x"
