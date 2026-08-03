@@ -1,5 +1,6 @@
 import React from "react";
 import { CSSProp } from "styled-components";
+import { resolveImageUrl } from "../../constants/functions";
 import { Container, AvatarImage } from "./styles";
 
 export interface AvatarProps {
@@ -10,9 +11,7 @@ export interface AvatarProps {
 
 const Avatar: React.FC<AvatarProps> = (props) => {
   const { imageUrl, styleContainer, size = 120 } = props;
-  const image =
-    imageUrl ||
-    "https://unitok.s3.sa-east-1.amazonaws.com/avatar-default.png";
+  const image = resolveImageUrl(typeof imageUrl === "string" ? imageUrl : undefined);
   return (
     <Container styleContainer={styleContainer}>
       <AvatarImage

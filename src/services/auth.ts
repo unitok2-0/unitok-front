@@ -61,9 +61,9 @@ export async function signInRequest(formData: SignInRequestData) {
   }
 }
 
-export async function sendForgotSMS(phone: string) {
+export async function sendForgotPasswordEmail(email: string) {
   try {
-    const response = await api.post(FORGOT_PASSWORD, { phone })
+    const response = await api.post(FORGOT_PASSWORD, { email })
     const { data } = response
     return data
   } catch (error) {

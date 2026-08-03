@@ -15,7 +15,6 @@ module.exports = withPWA({
     return config;
   },
   images: {
-    // TODO: adicionar o hostname do bucket Hetzner Object Storage aqui assim que for provisionado.
     remotePatterns: [
       { protocol: 'http', hostname: 'localhost' },
       { protocol: 'https', hostname: 'd23spvk2eturf4.cloudfront.net' },
@@ -24,6 +23,8 @@ module.exports = withPWA({
       { protocol: 'https', hostname: 'del3lo544i2y2.cloudfront.net' },
       { protocol: 'http', hostname: 'development-adbat.s3-website-us-east-1.amazonaws.com' },
       { protocol: 'https', hostname: 'unitok-dev.s3.sa-east-1.amazonaws.com' },
+      // Hetzner Object Storage (bucket atual, AWS_S3_FORCE_PATH_STYLE=true -> https://nbg1.your-objectstorage.com/<bucket>/<key>)
+      { protocol: 'https', hostname: 'nbg1.your-objectstorage.com' },
     ],
     deviceSizes: [320, 640, 768, 992, 1024, 1200, 1360, 1440, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],

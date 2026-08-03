@@ -3,6 +3,7 @@ import { ModalContactInformation } from 'components/Modals/ModalContactInformati
 import useDisclosure from 'hooks/useDisclosure';
 import { Contact } from 'pages/profile/contacts';
 import { useEffect, useState } from 'react';
+import { resolveImageUrl } from 'constants/functions';
 
 import * as S from './styles';
 
@@ -33,7 +34,7 @@ export function ContactInformationContainer({
 
   const modalContactInformationDisclosure = useDisclosure();
 
-  const userImageDefault = 'https://unitok.s3.sa-east-1.amazonaws.com/avatar-default.png'
+  const userImageDefault = '/assets/temporary_avatar_img.svg'
 
   /*   function handleToggleModalContactInformation() {
       setIsOpenModalContactInformation(!isOpenModalContactInformation);
@@ -106,7 +107,7 @@ export function ContactInformationContainer({
 
 
         <S.ImgContainer
-          img_src={contact.img ?? userImageDefault}
+          img_src={resolveImageUrl(contact.img, userImageDefault)}
           onClick={modalContactInformationDisclosure.handleToggle}
         />
 

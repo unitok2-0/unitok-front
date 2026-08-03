@@ -13,12 +13,32 @@ export function getFileName(file: string) {
 
 type sizeType = 'small' | 'medium' | 'large'
 
-export const getImageUrl = (imageName: string, size?: sizeType) => {
+// Bucket AWS antigo (unitok.s3.sa-east-1.amazonaws.com e variantes) foi desativado
+// na migração pra Hetzner Object Storage — nenhuma URL *.amazonaws.com serve
+// imagem válida hoje. Documentos antigos no Mongo ainda guardam essas URLs.
+export const DEFAULT_IMAGE_PLACEHOLDER = '/assets/temporary_avatar_img.svg'
+
+export function isLegacyImageUrl(url?: string | null): boolean {
+  if (!url) return false
+  try {
+    const { hostname } = new URL(url)
+    return hostname.endsWith('.amazonaws.com')
+  } catch {
+    return false
+  }
+}
+
+export function resolveImageUrl(url?: string | null, fallback: string = DEFAULT_IMAGE_PLACEHOLDER): string {
+  if (!url || isLegacyImageUrl(url)) return fallback
+  return url
+}
+
+export const getImageUrl = (imageName: string, size?: sizeType, fallback: string = DEFAULT_IMAGE_PLACEHOLDER) => {
   const image = imageName
   const imageSize = size
   if (typeof image !== 'undefined' && image != null && image !== '') {
     if (image.startsWith('https://') || image.startsWith('http://') || image.startsWith('file://') || image.startsWith('content://') || image.startsWith('/')) {
-      return image
+      return resolveImageUrl(image, fallback)
     } else if (imageSize) {
       const fileExtension = image.substr(image.lastIndexOf('.') + 1)
       let imageName = image.replace(/\.[^/.]+$/, '')
@@ -32,7 +52,7 @@ export const getImageUrl = (imageName: string, size?: sizeType) => {
   return imageName
 }
 
-export const getUserImageUrl = (imageName: string, size?: sizeType) => {
+export const getUserImageUrl = (imageName: string, size?: sizeType, fallback: string = DEFAULT_IMAGE_PLACEHOLDER) => {
   const image = imageName
   const imageSize = size
 
@@ -40,7 +60,7 @@ export const getUserImageUrl = (imageName: string, size?: sizeType) => {
 
   if (typeof image !== 'undefined' && image != null && image !== '') {
     if (image.startsWith('https://') || image.startsWith('http://') || image.startsWith('file://') || image.startsWith('content://') || image.startsWith('/')) {
-      return image
+      return resolveImageUrl(image, fallback)
     } else if (imageSize) {
       const fileExtension = image.substr(image.lastIndexOf('.') + 1)
       let imageName = image.replace(/\.[^/.]+$/, '')

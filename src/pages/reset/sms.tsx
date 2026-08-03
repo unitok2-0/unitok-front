@@ -12,16 +12,16 @@ import { Form, Heading, Text, ButtonsContainer } from "containers/auth/styles";
 import Input from "components/Inputs/Input";
 
 import { withSSRGuest } from "../../utils/withSSRGuest";
-import { sendForgotSMS } from "../../services/auth";
+import { sendForgotPasswordEmail } from "../../services/auth";
 
 type SignInFormData = {
-  phone: string;
+  email: string;
 };
 
 
 
 export default function ResetSMS() {
-  const [phone, setPhone] = useState("")
+  const [email, setEmail] = useState("")
 
   const { push } = useRouter();
   const [sent, setSent] = useState(false);
@@ -29,7 +29,7 @@ export default function ResetSMS() {
   async function handleSignIn(event: FormEvent) {
     event.preventDefault();
     try {
-      await sendForgotSMS(phone);
+      await sendForgotPasswordEmail(email);
       setSent(true);
     } catch (error) {
       toast.error(error.error, {
@@ -49,10 +49,10 @@ export default function ResetSMS() {
         <Form onSubmit={handleSignIn}>
           {sent ? (
             <>
-              <Heading>SMS enviado!</Heading>
+              <Heading>E-mail enviado!</Heading>
               <Text>
-                O SMS para redefinição de senha foi enviado para o número
-                de telefone informado.
+                O e-mail para redefinição de senha foi enviado para o
+                endereço informado.
                 <br />
                 <br />
                 Pode levar alguns minutos até aparecer em sua caixa de entrada.
@@ -68,15 +68,15 @@ export default function ResetSMS() {
             <>
               <Heading>Redefinir senha</Heading>
               <Text>
-                Informe o telefone cadastrado para enviarmos um link para
+                Informe o e-mail cadastrado para enviarmos um link para
                 redefinição de senha.
               </Text>
 
               <Input
-                id="phone"
-                type="tel"
-                onPhoneChange={(phone) => setPhone(phone)}
-                value={phone}
+                id="email"
+                type="email"
+                onChange={(event) => setEmail(event.target.value)}
+                value={email}
                 isWhiteMode
               />
 

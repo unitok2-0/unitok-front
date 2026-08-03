@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { Container, ButtonStyles, BannerContainer } from './styles'
 import { usePet } from 'contexts/PetContext';
 import ButtonPrimaryIcon from 'components/Buttons/ButtonPrimaryIcon';
+import { resolveImageUrl } from 'constants/functions';
 
 interface ProfileBannerProps {
 }
@@ -52,7 +53,7 @@ export function ProfileBannerPet({ }: ProfileBannerProps) {
       <Container>
 
         <BannerContainer
-          background_url={bannerPet || bannerDefault}
+          background_url={resolveImageUrl(bannerPet, bannerDefault)}
           className='background-container'
           id='bannerUpdatePet'
         >

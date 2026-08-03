@@ -1,6 +1,7 @@
 import { PetMenu } from 'components/PetMenu';
 import { useAuth } from 'contexts/AuthContext';
 import { Pet } from 'contexts/PetContext';
+import { resolveImageUrl } from 'constants/functions';
 import Router from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
 
@@ -25,7 +26,7 @@ export default function CardPet({
     <S.Container onClick={() => Router.push(`/profile/pet-me/${pet.profileCode}`)}>
 
       <S.ImgContainer
-        img_src={pet?.avatarImage ?? 'assets/icon_default_avatar_pet.png'}
+        img_src={resolveImageUrl(pet?.avatarImage, '/assets/icon_default_avatar_pet.png')}
       />
 
       <S.Name>

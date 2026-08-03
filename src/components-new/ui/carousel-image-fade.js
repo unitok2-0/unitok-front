@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import Head from "next/head";
 import CardCarousel from "../card/card-carousel";
 import Image from "next/image";
+import { resolveImageUrl } from "../../constants/functions";
 
 export default function CarouselImageFade(props) {
   var settings = {
@@ -35,7 +36,7 @@ export default function CarouselImageFade(props) {
         {props.gallery.map((item, i) => (
           <figure className="w-full" key={i}>
             <Image
-              src={item.url}
+              src={resolveImageUrl(item.url)}
               width={576}
               height={359}
               quality={100}
