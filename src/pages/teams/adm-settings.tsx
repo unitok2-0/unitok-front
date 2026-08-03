@@ -48,8 +48,13 @@ export default function ProfileSettings() {
   });
 
   const router = useRouter()
-  const defaultAvatar = "https://unitok.s3.sa-east-1.amazonaws.com/avatar-default.png";
+  const defaultAvatar = "/assets/temporary_avatar_img.svg";
 
+  useEffect(() => {
+    if (user?.imageUrl) {
+      setAvatarImage(user.imageUrl);
+    }
+  }, [user?.imageUrl]);
 
   if (!user) return null;
 
@@ -81,9 +86,6 @@ export default function ProfileSettings() {
       await updateUser({ userImage: defaultAvatar })
       setAvatarFile(undefined)
 
-      document.getElementById("logoImage").style.background = `url(${defaultAvatar}) no-repeat center`
-      document.getElementById("logoImage").style.backgroundSize = "cover"
-
       toast.success("Imagem removida sucesso!", {
         position: "top-right",
         autoClose: 4000,
@@ -99,16 +101,17 @@ export default function ProfileSettings() {
     }
   }
 
-  async function uploadAvatarFile(file: any) {
+  async function uploadAvatarFile(file: any, fileTemporary?: string) {
     try {
       setLoadingAddImage(true);
-      setAvatarImage(file.path)
+      if (fileTemporary) setAvatarImage(fileTemporary);
 
       const formData = new FormData();
       formData.append("picture", file);
       formData.append("prefix", "files/");
 
-      await updateImageUser(formData);
+      const updatedUser = await updateImageUser(formData);
+      setAvatarImage(updatedUser.imageUrl);
 
       toast.success("Imagem salva com sucesso!", {
         position: "top-right",

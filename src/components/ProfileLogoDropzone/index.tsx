@@ -4,7 +4,8 @@ import Dropzone, { DropzoneProps } from "components/Dropzone/DropzoneComponent";
 
 import * as S from "./styles";
 import ButtonPrimary from "components/Buttons/ButtonPrimary";
-import { getFileName, getImageUrl } from "constants/functions";
+import { getFileName } from "constants/functions";
+import { useImageFallback } from "hooks/useImageFallback";
 import { useCallback, useEffect, useState } from "react";
 import { ProfileBanner } from "components/ProfileBanner";
 import { useAuth } from "contexts/AuthContext";
@@ -54,9 +55,6 @@ export default function ProfileImageDropzone(props: ProfileImageDropzoneProps) {
       let fileTemporary = undefined;
       try {
         fileTemporary = await readUploadFileAsText(file);
-        //@ts-ignore
-        document.getElementById("logoImage").style.background = `url(${fileTemporary}) no-repeat center`
-        document.getElementById("logoImage").style.backgroundSize = "cover"
       } catch (error) {
         console.log(error);
       }
@@ -67,16 +65,21 @@ export default function ProfileImageDropzone(props: ProfileImageDropzoneProps) {
     [props.onFileAdded]
   );
 
-  const defaultLogo = "https://unitok.s3.sa-east-1.amazonaws.com/default-logo-gray.svg"
+  const defaultLogo = "/assets/temporary_avatar_img.svg"
+
+  const rawImageSrc = props.displayImageSrc ??
+    (props.isAvatarImg ? user?.userImage : user?.logoImage !== undefined ? user?.logoImage : defaultLogo);
+
+  const imageSrc = useImageFallback(rawImageSrc, defaultLogo);
 
   return (
     <>
       <S.Wrapper>
         <S.ButtonsLogoContainer>
-          <S.ImageContainer 
-            id="logoImage" 
-            title="Imagem de perfil" 
-            img_src={getImageUrl(props.isAvatarImg ? user?.userImage : user?.logoImage !== undefined ? user?.logoImage : defaultLogo)}>
+          <S.ImageContainer
+            id="logoImage"
+            title="Imagem de perfil"
+            img_src={imageSrc}>
           </S.ImageContainer>
 
           <S.ButtonsGrid>
