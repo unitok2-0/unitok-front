@@ -99,20 +99,25 @@ const userAccountLinks = [
     label: "Contatos compartilhados comigo",
     href: "/profile/contacts",
     hasChevronRightIcon: true,
-    isNew: true
+    isNew: true,
+    // Escopo atual do produto é só Pets — Unitok Cards pode voltar no futuro,
+    // por isso oculto (isDisabled) em vez de remover a rota/link.
+    isDisabled: true,
   },
   {
     icon: <BiBarChart size={20} />,
     label: "Relatório",
     href: "/profile/analytics",
     hasChevronRightIcon: true,
+    isDisabled: true,
   },
   {
     icon: <UnitokIcon size={20} />,
     label: "Meus dispositivos Unitok",
     href: "/profile/mydevices",
     hasChevronRightIcon: true,
-    isNew: true
+    isNew: true,
+    isDisabled: true,
   },
   {
     icon: <IoPawOutline size={20} />,

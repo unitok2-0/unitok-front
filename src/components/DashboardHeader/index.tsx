@@ -34,16 +34,8 @@ export type DashboardHeaderProps = {
 
 export default function DashboardHeader(props: DashboardHeaderProps) {
   const { handleToggle, isOpen } = useDisclosure();
-  const { user, signOut } = useAuth();
+  const { signOut } = useAuth();
   const router = useRouter()
-
-  function onHandleOpenModalNotification() {
-    if (user?.notifications.length >= 1) {
-      props.notificationModalHandleOpen();
-    } else {
-      toast.error('Você não tem nenhuma notificação')
-    }
-  }
 
   //disabled platform notification temporarily
   const [notifications, setNotifications] = useState<any>();
@@ -60,6 +52,14 @@ export default function DashboardHeader(props: DashboardHeaderProps) {
       } catch (error) { }
     })()
   }, []);
+
+  function onHandleOpenModalNotification() {
+    if (notifications?.length >= 1) {
+      props.notificationModalHandleOpen();
+    } else {
+      toast.error('Você não tem nenhuma notificação')
+    }
+  }
 
   let dashboardOptions = props.links;
 
