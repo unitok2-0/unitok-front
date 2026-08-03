@@ -108,20 +108,19 @@ export default function ProfileSettings() {
       formData.append("picture", file);
       formData.append("prefix", "files/");
 
-      updateImageUser(formData);
+      await updateImageUser(formData);
 
       toast.success("Imagem salva com sucesso!", {
         position: "top-right",
         autoClose: 4000,
       });
-
-      setLoadingAddImage(false);
     } catch (error) {
       console.log(error)
       toast.error("Falha ao tentar atualizar imagem!", {
         position: "top-right",
         autoClose: 4000,
       });
+    } finally {
       setLoadingAddImage(false);
     }
   }

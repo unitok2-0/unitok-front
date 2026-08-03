@@ -256,25 +256,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   async function updateImageUser(fileImage: FormData) {
-    try {
-      updateProfileImageUser(fileImage)
-        .then((resp) => {
-          return resp;
-        })
-        .then((resp) => {
-          const user = mapUser(resp?.user || {});
-          if (resp?.user) {
-            setImageTemporary("");
-            setUser(user);
-          }
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
-      return user;
-    } catch (error) {
-      throw error;
+    const resp = await updateProfileImageUser(fileImage);
+    if (!resp?.user) {
+      throw new Error("Falha ao atualizar imagem.");
     }
+    const updatedUser = mapUser(resp.user);
+    setImageTemporary("");
+    setUser(updatedUser);
+    return updatedUser;
   }
 
   async function updateProfileBanner(fileImage: FormData | string) {
