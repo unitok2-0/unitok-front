@@ -111,32 +111,24 @@ export default function Profile({ user, admin, buttonsPattern, listProfessions, 
       formData.append("picture", file);
       formData.append("prefix", "files/");
 
-      let imageTemporary = fileTemporary;
-
-      updateImageUser(formData);
-
-      if (imageTemporary) {
+      if (fileTemporary) {
         setImageTemporary("imageTemporary");
-        // setAvatarImage(imageTemporary);
       }
 
-      setTimeout(() => {
-        const message = imageTemporary
-          ? "Imagem salva com sucesso!"
-          : "Imagem enviada, em breve estara no seu perfil!";
-        toast.success(message, {
-          position: "top-right",
-          autoClose: 4000,
-        });
+      await updateImageUser(formData);
 
-        setloadingAddImage(false);
-      }, 300);
+      toast.success("Imagem salva com sucesso!", {
+        position: "top-right",
+        autoClose: 4000,
+      });
     } catch (error) {
       toast.error("Falha ao tentar atualizar imagem!", {
         position: "top-right",
         autoClose: 4000,
       });
-
+      setImageTemporary("");
+    } finally {
+      setloadingAddImage(false);
     }
   }
 

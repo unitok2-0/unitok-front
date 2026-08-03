@@ -1,16 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Basic } from "unsplash-js/dist/methods/photos/types";
-import debounce from 'lodash.debounce';
 import { useDropzone } from 'react-dropzone'
 
 import ButtonLink from "components/Buttons/ButtonLink";
-import Input from "components/Inputs/Input";
 import Modal from "components/Modals/MainModal";
 import { Text } from "components/Typography";
-import { getFileName } from "constants/functions";
 import { useAuth } from "contexts/AuthContext";
-import { useUnsplash } from "hooks/useUnsplash";
 import { usePet } from "contexts/PetContext";
 import { handleGetPetIdBanner } from "services/pet";
 import ImageCropper from "components/ImageCropper/Cropper";
@@ -27,15 +22,10 @@ export type SelectBannerModalProps = {
   setBannerPet?: (parameter: string) => void;
 };
 
-type TypeUpload = "UPLOAD" | "UNSPLASH";
-
 export default function SelectBannerModal(props: SelectBannerModalProps) {
 
   const { handleUpdateProfilePetBanner } = usePet();
   const { updateProfileBanner } = useAuth();
-  const { unsplashApi } = useUnsplash();
-  const [typeUpload, setTypeUpload] = useState<TypeUpload>('UPLOAD')
-  const [unsplashImages, setUnsplashImages] = useState<Basic[]>(null);
 
   const [cropperImage, setCropperImage] = useState<string | null>();
   const [showCropper, setShowCropper] = useState<boolean>(false);
@@ -54,28 +44,6 @@ export default function SelectBannerModal(props: SelectBannerModalProps) {
     console.log(croppedArea, croppedAreaPixels)
     setCroppedAreaPixels(croppedAreaPixels)
   }, [])
-
-  async function handleAddBannerUnsplash(file: any) {
-    if (file) {
-
-      if (typeof file === "string") {
-
-      } else {
-        const name = `files/${getFileName(file.name)}`;
-        file.path = name;
-      }
-
-      setCropperImage(file);
-      setShowCropper(true);
-
-      const formData = new FormData();
-      formData.append("picture", file);
-      formData.append("prefix", "files/");
-
-      setFormDataState(formData);
-    }
-
-  }
 
   async function updateImageCropper() {
     try {
@@ -114,30 +82,6 @@ export default function SelectBannerModal(props: SelectBannerModalProps) {
       setShowCropper(false);
     }
   }
-
-  useEffect(() => {
-    unsplashApi.photos.list({ perPage: 25 }).then(res => {
-      if (res.response) {
-        const images = res.response.results;
-        setUnsplashImages(images);
-      } else {
-        toast.error("Falha ao carregar as imagens.")
-      }
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const handleSearchImage = debounce(async (query: string) => {
-    const images = await unsplashApi.search.getPhotos({ query })
-    if (images.response.results) {
-      setUnsplashImages(images.response.results);
-    }
-
-    if (images.response.results.length < 1 || query === '') {
-      const photos = await unsplashApi.photos.list({ perPage: 25 })
-      setUnsplashImages(photos.response.results)
-    }
-  }, 300)
 
   const readUploadFileAsText = async (file) => {
     var oFReader = new FileReader();
@@ -211,7 +155,7 @@ export default function SelectBannerModal(props: SelectBannerModalProps) {
   return (
     <>
       <Modal modalIsOpen={props.modalIsOpen} closeModal={props.closeModal}>
-        <S.Wrapper removePadding={typeUpload === "UNSPLASH"}>
+        <S.Wrapper>
           <ButtonLink
             styleProp={S.CloseButtonStyle}
             variant="tertiary"
@@ -234,64 +178,20 @@ export default function SelectBannerModal(props: SelectBannerModalProps) {
             </ButtonLink>
           </div>
 
-          <S.Header>
-            <S.SelectButton
-              isActive={typeUpload === 'UPLOAD'}
-              onClick={() => setTypeUpload("UPLOAD")}
-            >
-              Upload
-            </S.SelectButton>
-
-            <S.SelectButton
-              onClick={() => setTypeUpload("UNSPLASH")}
-              isActive={typeUpload === 'UNSPLASH'}
-            >
-              Unsplash
-            </S.SelectButton>
-          </S.Header>
           <S.Content>
-            {typeUpload === "UPLOAD" ? (
-              <>
-                <div {...getRootProps({
-                  'aria-label': 'arraste a imagem para a área',
-                })} className="dropzone">
-                  <input {...getInputProps()} />
-                  <p>Faça upload do arquivo aqui</p>
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16.9999 12.0002V15.3334C16.9999 15.7755 16.8126 16.1994 16.4792 16.5119C16.1458 16.8245 15.6936 17.0001 15.2221 17.0001H2.77768C2.30619 17.0001 1.854 16.8245 1.52061 16.5119C1.18721 16.1994 0.999908 15.7755 0.999908 15.3334V12.0002" stroke="#FF4C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M13.4435 5.16772L8.99904 1.00115L4.5546 5.16772" stroke="#FF4C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M8.99783 1.00004L8.99783 10.9998" stroke="#FF4C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
+            <div {...getRootProps({
+              'aria-label': 'arraste a imagem para a área',
+            })} className="dropzone">
+              <input {...getInputProps()} />
+              <p>Faça upload do arquivo aqui</p>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16.9999 12.0002V15.3334C16.9999 15.7755 16.8126 16.1994 16.4792 16.5119C16.1458 16.8245 15.6936 17.0001 15.2221 17.0001H2.77768C2.30619 17.0001 1.854 16.8245 1.52061 16.5119C1.18721 16.1994 0.999908 15.7755 0.999908 15.3334V12.0002" stroke="#FF4C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M13.4435 5.16772L8.99904 1.00115L4.5546 5.16772" stroke="#FF4C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M8.99783 1.00004L8.99783 10.9998" stroke="#FF4C1C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
 
-                <Text className="sizes-text">Tamanho recomendado: 600px de largura ou mais.</Text>
-              </>
-            ) : (
-              <>
-                <Input
-                  id="search-image"
-                  onChange={async (e) => {
-                    handleSearchImage(e.target.value)
-                  }}
-                  classNameContainer="search-input-container"
-                  placeholder="Pesquisa por uma imagem..."
-                />
-                <S.CardsContainer>
-                  {unsplashImages?.map(image => (
-                    <S.ImageCard
-                      img_url={image.urls.small}
-                      key={image.id}
-                      onClick={() => {
-                        handleAddBannerUnsplash(image.urls.full)
-                      }}
-                    >
-                      <div className="preview"></div>
-                      <a href={image.user.links.self}>by <span>{image.user.name}</span></a>
-                    </S.ImageCard>
-                  ))}
-                </S.CardsContainer>
-              </>
-            )}
+            <Text className="sizes-text">Tamanho recomendado: 600px de largura ou mais.</Text>
           </S.Content>
         </S.Wrapper>
       </Modal >
