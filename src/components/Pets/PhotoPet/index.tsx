@@ -40,7 +40,16 @@ export function PhotoPet({
   return (
     isValidImageURL(photo?.location) ?
       <S.Container>
-        <S.PhotoPet src={getImageUrl(photo.key)} alt="Pet Picture" height={90} width={90} />
+        <S.PhotoPet
+          src={getImageUrl(photo.key)}
+          alt="Pet Picture"
+          height={90}
+          width={90}
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = '/assets/temporary_avatar_img.svg';
+          }}
+        />
         <S.IconDelete
           src="/assets/icon_trash.svg"
           alt="Botão deletar, icone lixeira"

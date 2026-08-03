@@ -1,7 +1,7 @@
 import { PetMenu } from 'components/PetMenu';
 import { useAuth } from 'contexts/AuthContext';
 import { Pet } from 'contexts/PetContext';
-import { resolveImageUrl } from 'constants/functions';
+import { useImageFallback } from 'hooks/useImageFallback';
 import Router from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
 
@@ -20,13 +20,14 @@ export default function CardPet({
 }: CardPetProps) {
   const { user } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const avatarSrc = useImageFallback(pet?.avatarImage, '/assets/icon_default_avatar_pet.png');
 
   return (
     <S.ContainerRelative>
     <S.Container onClick={() => Router.push(`/profile/pet-me/${pet.profileCode}`)}>
 
       <S.ImgContainer
-        img_src={resolveImageUrl(pet?.avatarImage, '/assets/icon_default_avatar_pet.png')}
+        img_src={avatarSrc}
       />
 
       <S.Name>

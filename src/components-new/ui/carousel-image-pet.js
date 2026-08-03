@@ -1,8 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
 import Head from "next/head";
-import Image from "next/image";
-import { resolveImageUrl } from "../../constants/functions";
+import GalleryImage from "./gallery-image";
 
 export default function CarouselImagePet(props) {
   var settings = {
@@ -36,7 +35,7 @@ export default function CarouselImagePet(props) {
         {props.gallery.map((item, i) => (
           <figure className="w-full" key={i}>
             <picture className="flex justify-end ">
-              <Image src={resolveImageUrl(item.url)} width={519} height={537} quality={100} alt="Imagem" />
+              <GalleryImage src={item.url} width={519} height={537} quality={100} alt="Imagem" />
             </picture>
           </figure>
         ))}

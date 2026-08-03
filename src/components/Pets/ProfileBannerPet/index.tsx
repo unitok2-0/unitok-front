@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { Container, ButtonStyles, BannerContainer } from './styles'
 import { usePet } from 'contexts/PetContext';
 import ButtonPrimaryIcon from 'components/Buttons/ButtonPrimaryIcon';
-import { resolveImageUrl } from 'constants/functions';
+import { useImageFallback } from 'hooks/useImageFallback';
 
 interface ProfileBannerProps {
 }
@@ -23,6 +23,7 @@ export function ProfileBannerPet({ }: ProfileBannerProps) {
   const [bannerPet, setBannerPet] = useState('');
 
   const bannerDefault = "/assets/unitok_logo_banner_profile.svg";
+  const bannerSrc = useImageFallback(bannerPet, bannerDefault);
 
   useEffect(() => {
     setBannerPet(pet?.bannerImage);
@@ -53,7 +54,7 @@ export function ProfileBannerPet({ }: ProfileBannerProps) {
       <Container>
 
         <BannerContainer
-          background_url={resolveImageUrl(bannerPet, bannerDefault)}
+          background_url={bannerSrc}
           className='background-container'
           id='bannerUpdatePet'
         >

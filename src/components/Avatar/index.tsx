@@ -1,6 +1,6 @@
 import React from "react";
 import { CSSProp } from "styled-components";
-import { resolveImageUrl } from "../../constants/functions";
+import { useImageFallback } from "../../hooks/useImageFallback";
 import { Container, AvatarImage } from "./styles";
 
 export interface AvatarProps {
@@ -11,7 +11,7 @@ export interface AvatarProps {
 
 const Avatar: React.FC<AvatarProps> = (props) => {
   const { imageUrl, styleContainer, size = 120 } = props;
-  const image = resolveImageUrl(typeof imageUrl === "string" ? imageUrl : undefined);
+  const image = useImageFallback(typeof imageUrl === "string" ? imageUrl : undefined);
   return (
     <Container styleContainer={styleContainer}>
       <AvatarImage

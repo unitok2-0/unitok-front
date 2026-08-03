@@ -170,6 +170,10 @@ export function ProfilePet({
                   onClick={() => { setCurrentPhoto(pet?.gallery.indexOf(photo)); modalPhotoPet.handleOpen() }}
                   key={photo?.key}
                   src={getImageUrl(photo?.location)}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = '/assets/temporary_avatar_img.svg';
+                  }}
                 />
                 :
                 <S.ContainerVideo>
