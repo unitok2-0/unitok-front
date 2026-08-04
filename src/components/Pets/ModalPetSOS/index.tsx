@@ -14,7 +14,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Pet, usePet } from 'contexts/PetContext';
 import { TutorPetContainer } from '../TutorPetContainer';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { sendLocationPet, sendLocationPetCall, sendLocationPetWpp } from 'services/pet';
+import { sendLocationPet } from 'services/pet';
 import { toast } from 'react-toastify';
 import { useAuth } from 'contexts/AuthContext';
 import ButtonLink from 'components/Buttons/ButtonLink';
@@ -137,8 +137,6 @@ export function ModalPetSOS({
   async function handleSendLocationPet(informationData: any) {
     try {
       await sendLocationPet(informationData);
-      await sendLocationPetWpp(informationData);
-      await sendLocationPetCall(informationData);
     } catch (error) {
       console.error('Erro ao enviar notificações, error');
     }

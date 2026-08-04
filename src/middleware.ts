@@ -4,8 +4,9 @@ import type { NextRequest } from 'next/server';
 // Escopo atual do produto é só o módulo de Pets. Os módulos abaixo continuam
 // no código (nada foi apagado — Cards/Teams podem voltar no futuro), mas
 // ficam bloqueados: acessar a URL direto (autenticado ou não) redireciona
-// pro módulo de pets em vez de renderizar a página. `intern-management` fica
-// de fora de propósito — continua em uso (gestão de contas/QR codes de pets).
+// pro login (deslogado) ou pro módulo de pets (logado) em vez de renderizar
+// a página. `intern-management` fica de fora de propósito — continua em uso
+// (gestão de contas/QR codes de pets).
 const DISABLED_ROUTE_PREFIXES = [
   '/profile/contacts',
   '/profile/analytics',
@@ -19,9 +20,19 @@ const DISABLED_ROUTE_PREFIXES = [
   '/cartao-visita',
   '/advancedSettings',
   '/conarh2022',
+  '/home',
+  '/index-old',
+  '/activePet',
+  '/expositor',
+  '/ads',
+  '/map',
+  '/tag',
+  '/checkin',
 ];
 
+const LOGIN_ROUTE = '/login';
 const PETS_FALLBACK_ROUTE = '/profile/mypets';
+const AUTH_COOKIE_NAME = 'unitok.token';
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -29,7 +40,9 @@ export function middleware(request: NextRequest) {
   const isDisabledRoute = DISABLED_ROUTE_PREFIXES.some((prefix) => pathname.startsWith(prefix));
 
   if (isDisabledRoute) {
-    return NextResponse.redirect(new URL(PETS_FALLBACK_ROUTE, request.url));
+    const isLoggedIn = Boolean(request.cookies.get(AUTH_COOKIE_NAME)?.value);
+    const destination = isLoggedIn ? PETS_FALLBACK_ROUTE : LOGIN_ROUTE;
+    return NextResponse.redirect(new URL(destination, request.url));
   }
 
   return NextResponse.next();
@@ -49,5 +62,13 @@ export const config = {
     '/cartao-visita/:path*',
     '/advancedSettings/:path*',
     '/conarh2022/:path*',
+    '/home/:path*',
+    '/index-old',
+    '/activePet/:path*',
+    '/expositor/:path*',
+    '/ads/:path*',
+    '/map',
+    '/tag/:path*',
+    '/checkin/:path*',
   ],
 };

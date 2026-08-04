@@ -98,7 +98,7 @@ export function ContainerNotificationMessage({
             }
             {typeNotification === 'LOCALIZATION' &&
               <>
-                Confira seu email ou SMS...
+                Confira seu email...
               </>
             }
           </S.MessagePreview>

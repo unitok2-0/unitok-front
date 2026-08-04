@@ -28,11 +28,13 @@ export function ModalButtonsPet({
   const modalButtonsPet = useDisclosure();
   const { handleUpdateTutor, pet } = usePet();
 
+  // SMS desativado como canal de aviso (produto passou a notificar só por email/telefone/whatsapp).
+  // Item mantido comentado para religar facilmente se voltarmos a oferecer SMS.
   const buttonsData = [
     { type: 'phone', icon: '/assets/icon_telephone_circle.svg', name: 'Ligação', value: tutor?.phone?.value, active: tutor?.phone?.enable },
     { type: 'email', icon: '/assets/icon_circle_email.svg', name: 'E-mail', value: tutor?.email?.value, active: tutor?.email?.enable },
     { type: 'whatsapp', icon: '/assets/icon_circle_whatsapp.svg', name: 'WhatsApp', value: tutor?.whatsapp?.value, active: tutor?.whatsapp?.enable },
-    { type: 'sms', icon: '/assets/icon_circle_sms.svg', name: 'SMS', value: tutor?.sms?.value, active: tutor?.sms?.enable },
+    // { type: 'sms', icon: '/assets/icon_circle_sms.svg', name: 'SMS', value: tutor?.sms?.value, active: tutor?.sms?.enable },
   ]
 
   const [buttons, setButtons] = useState(buttonsData);
