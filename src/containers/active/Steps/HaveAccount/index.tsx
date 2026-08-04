@@ -21,12 +21,8 @@ export type IDevice = {
   name: string;
   device_type: string;
 }
-interface MyDevicesProps {
-  list_devices: IDevice[]
-}
 
-
-const HaveAccount: React.FC<HaveAccountProps> = ({ isAuthenticated, handleNextButton, codeId }, { list_devices }: MyDevicesProps) => {
+const HaveAccount: React.FC<HaveAccountProps> = ({ isAuthenticated, handleNextButton, codeId }) => {
   const router = useRouter();
 
   const handleHaveAccount = () => {
