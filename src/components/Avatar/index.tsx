@@ -7,11 +7,15 @@ export interface AvatarProps {
   styleContainer?: CSSProp;
   imageUrl?: string | ArrayBuffer;
   size?: number;
+  fallback?: string;
 }
 
 const Avatar: React.FC<AvatarProps> = (props) => {
-  const { imageUrl, styleContainer, size = 120 } = props;
-  const image = useImageFallback(typeof imageUrl === "string" ? imageUrl : undefined);
+  const { imageUrl, styleContainer, size = 120, fallback } = props;
+  const image = useImageFallback(
+    typeof imageUrl === "string" ? imageUrl : undefined,
+    fallback
+  );
   return (
     <Container styleContainer={styleContainer}>
       <AvatarImage

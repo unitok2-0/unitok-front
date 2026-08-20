@@ -101,7 +101,7 @@ export function ProfilePet({
 
         <S.Content>
           <S.PetContainer>
-            <Avatar imageUrl={pet?.avatarImage} />
+            <Avatar imageUrl={pet?.avatarImage} fallback="/assets/icon_default_avatar_pet.png" />
             <Heading
               font="titleSm"
               style={{ marginTop: "0.5rem", textAlign: "center", color: "#383D3B" }}
@@ -172,7 +172,7 @@ export function ProfilePet({
                   src={getImageUrl(photo?.location)}
                   onError={(e) => {
                     e.currentTarget.onerror = null;
-                    e.currentTarget.src = '/assets/temporary_avatar_img.svg';
+                    e.currentTarget.src = '/assets/icon_default_avatar_pet.png';
                   }}
                 />
                 :

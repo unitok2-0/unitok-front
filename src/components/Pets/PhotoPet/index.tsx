@@ -47,7 +47,7 @@ export function PhotoPet({
           width={90}
           onError={(e) => {
             e.currentTarget.onerror = null;
-            e.currentTarget.src = '/assets/temporary_avatar_img.svg';
+            e.currentTarget.src = '/assets/icon_default_avatar_pet.png';
           }}
         />
         <S.IconDelete
