@@ -18,7 +18,6 @@ import { sendLocationPet } from 'services/pet';
 import { toast } from 'react-toastify';
 import { useAuth } from 'contexts/AuthContext';
 import ButtonLink from 'components/Buttons/ButtonLink';
-import { GOOGLE_MAPS_API_KEY } from 'constants/values';
 
 const sendInformationToTutor = yup.object().shape({
   name: yup.string().required("Campo obrigatório"),
@@ -97,22 +96,19 @@ export function ModalPetSOS({
     }
   }
 
-  const getAddress = async () => {
-    const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${currentLocation.lat},${currentLocation.lng}&key=${GOOGLE_MAPS_API_KEY}`);
-    return await response.json();
-  }
-
   async function saveAddress() {
 
     try {
-      const addressData = await getAddress();
-
+      // O endereço é resolvido no backend (Geocoding API não aceita chave
+      // restrita por HTTP referrer, então precisa de uma chave server-side
+      // separada da usada aqui pra renderizar o mapa).
       const newInformationData = {
         petId: pet._id,
         name: informationData?.name,
         phone: informationData?.phone,
         email: informationData?.email,
-        address: addressData?.results[1]?.formatted_address,
+        lat: currentLocation.lat,
+        lng: currentLocation.lng,
         userId: user?._id
       }
 

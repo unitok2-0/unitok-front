@@ -276,7 +276,8 @@ export async function addPetInTutor(addTutorData: addPetInTutor) {
 interface sendLocationPet {
   petId: string;
   name: string;
-  address: string;
+  lat: number;
+  lng: number;
   phone: string;
   email?: string;
   userId?: string;

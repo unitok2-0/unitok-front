@@ -142,11 +142,6 @@ async function renderOpenAtStep1(pet = petWithOwnerTutor) {
 beforeEach(() => {
   jest.clearAllMocks();
   sendLocationPetMock.mockResolvedValue({});
-  global.fetch = jest.fn().mockResolvedValue({
-    json: async () => ({
-      results: [{}, { formatted_address: "Rua Teste, 123" }],
-    }),
-  }) as any;
   setScreenWidth(1024); // desktop by default
   mockGeolocation();
   mockPermissions("denied");
@@ -267,9 +262,11 @@ describe("ModalPetSOS", () => {
             petId: pet._id,
             name: "Fulano da Silva",
             phone: "11999999999",
-            // Real source reads addressData?.results[1]?.formatted_address —
-            // index 1, not 0 — matching the mocked fetch response shape.
-            address: "Rua Teste, 123",
+            // The address is now resolved server-side from lat/lng (Geocoding
+            // API rejects keys restricted by HTTP referrer, so the frontend
+            // no longer calls it directly — see SendNotificationService).
+            lat: -20,
+            lng: -40,
             userId: "finder-user-id",
           })
         );
