@@ -303,12 +303,14 @@ export default function EditProfilePet({ petData }: ProfilePetProps) {
     }
 
     try {
+      const raceValue = race && typeof race === "object" ? race.value : race;
+
       let objPropetys = {
         petId: pet?._id,
         name: fullName,
         profileName: profileName,
         species: species,
-        race: race.value,
+        race: raceValue,
         sex: sex,
         color: petColor,
         birth: birthDate,
@@ -337,7 +339,12 @@ export default function EditProfilePet({ petData }: ProfilePetProps) {
 
       Router.push("/profile/mypets");
     } catch (error) {
-      toast.error(error?.error || error, {
+      const message =
+        error?.error ||
+        (typeof error === "string" ? error : error?.message) ||
+        "Não foi possível salvar as informações do pet.";
+
+      toast.error(message, {
         position: "top-right",
         autoClose: 4000,
       });
