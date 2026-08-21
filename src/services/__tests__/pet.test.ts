@@ -58,7 +58,7 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-describe("createPet (style A - swallows error, returns false)", () => {
+describe("createPet", () => {
   it("returns response.data on success and calls api.post with CREATE_PET", async () => {
     (api.post as jest.Mock).mockResolvedValueOnce({ data: { _id: "1" } });
     const result = await createPet({ qrcode: "abc" });
@@ -66,10 +66,10 @@ describe("createPet (style A - swallows error, returns false)", () => {
     expect(result).toEqual({ _id: "1" });
   });
 
-  it("returns false on error, swallowing it", async () => {
-    (api.post as jest.Mock).mockRejectedValueOnce(new Error("fail"));
-    const result = await createPet({ qrcode: "abc" });
-    expect(result).toBe(false);
+  it("propagates the error instead of swallowing it", async () => {
+    const error = new Error("fail");
+    (api.post as jest.Mock).mockRejectedValueOnce(error);
+    await expect(createPet({ qrcode: "abc" })).rejects.toThrow("fail");
   });
 });
 
@@ -181,7 +181,7 @@ describe("getOnePet (style A, ctx branch)", () => {
   });
 });
 
-describe("UpdatePet (style A)", () => {
+describe("UpdatePet", () => {
   it("returns response.data on success and calls api.put with UPDATE_PET", async () => {
     (api.put as jest.Mock).mockResolvedValueOnce({ data: { _id: "1", name: "Rex" } });
     const result = await UpdatePet({ petId: "1", name: "Rex" });
@@ -189,10 +189,9 @@ describe("UpdatePet (style A)", () => {
     expect(result).toEqual({ _id: "1", name: "Rex" });
   });
 
-  it("returns false on error", async () => {
-    (api.put as jest.Mock).mockRejectedValueOnce(new Error("fail"));
-    const result = await UpdatePet({ petId: "1" });
-    expect(result).toBe(false);
+  it("propagates the backend error payload instead of swallowing it", async () => {
+    (api.put as jest.Mock).mockRejectedValueOnce({ response: { data: { error: "Nome de usuário já utilizado" } } });
+    await expect(UpdatePet({ petId: "1" })).rejects.toEqual({ error: "Nome de usuário já utilizado" });
   });
 });
 

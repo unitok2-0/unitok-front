@@ -11,13 +11,8 @@ interface ICreatePetData {
 }
 
 export async function createPet({ qrcode }: ICreatePetData) {
-  try {
-    const response = await api.post(CREATE_PET, { qrcode });
-    console.log(response.data)
-    return response.data
-  } catch (error) {
-    return false;
-  }
+  const response = await api.post(CREATE_PET, { qrcode });
+  return response.data
 }
 
 interface IGetMyPets {
@@ -109,11 +104,10 @@ interface IUpdatePetData {
 
 export async function UpdatePet(data: IUpdatePetData) {
   try {
-    console.log(data)
     const response = await api.put(UPDATE_PET, data);
     return response.data
   } catch (error) {
-    return false;
+    throw error?.response?.data || error;
   }
 }
 

@@ -22,7 +22,7 @@ import ProfileImageDropzone from "components/ProfileImageDropzone";
 import { useAuth } from "contexts/AuthContext";
 import { ButtonsProps, UserProps } from "domain/User";
 import { formProfileUserProps, getAllProfessions, getUser, verifyUniqueName } from "services/user";
-import { formatUniqueName } from "constants/functions";
+import { formatUniqueName, DEFAULT_IMAGE_PLACEHOLDER } from "constants/functions";
 import useDisclosure from "hooks/useDisclosure";
 import { ModalGifButtons } from "components/Modals/ModalGifButtons";
 import { getTeamsGroup } from "services/teamsGroup";
@@ -136,7 +136,7 @@ export default function Profile({ user, admin, buttonsPattern, listProfessions, 
     try {
       setloadingRemoveImage(true);
 
-      const defaultImage = "https://unitok.s3.sa-east-1.amazonaws.com/avatar-default.png";
+      const defaultImage = DEFAULT_IMAGE_PLACEHOLDER;
       setAvatarImage(defaultImage);
       await saveImageUser(defaultImage);
 

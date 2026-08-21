@@ -3,7 +3,7 @@ import { CSSProperties } from "styled-components";
 
 import { DropzoneProps } from "components/Dropzone/DropzoneComponent";
 import ButtonPrimary from "components/Buttons/ButtonPrimary";
-import { getFileName, getUserImageUrl } from "constants/functions";
+import { getFileName, getUserImageUrl, DEFAULT_IMAGE_PLACEHOLDER } from "constants/functions";
 import { ProfileBanner } from "components/ProfileBanner";
 import { useAuth } from "contexts/AuthContext";
 
@@ -34,6 +34,9 @@ export default function ProfileImageDropzone(props: ProfileImageDropzoneProps) {
         setHaveImageSrc(false);
         break;
       case 'https://unitok.s3.sa-east-1.amazonaws.com/avatar-default.png':
+        setHaveImageSrc(false);
+        break;
+      case DEFAULT_IMAGE_PLACEHOLDER:
         setHaveImageSrc(false);
         break;
       default:
@@ -86,7 +89,7 @@ export default function ProfileImageDropzone(props: ProfileImageDropzoneProps) {
       <S.Wrapper style={props.styleContainer}>
         {shouldEditBanner && <ProfileBanner />}
         <S.ProfileAndButtons>
-          <S.ImageContainer id="imageProfileEdit" title="Imagem de perfil" img_src={props.displayImageSrc ? getUserImageUrl(props.displayImageSrc) : "https://unitok.s3.sa-east-1.amazonaws.com/avatar-default.png"}>
+          <S.ImageContainer id="imageProfileEdit" title="Imagem de perfil" img_src={props.displayImageSrc ? getUserImageUrl(props.displayImageSrc) : DEFAULT_IMAGE_PLACEHOLDER}>
           </S.ImageContainer>
 
           <S.ButtonsGrid>

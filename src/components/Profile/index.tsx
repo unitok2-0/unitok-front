@@ -238,7 +238,9 @@ export default function Profile(props: ProfileProps) {
         </ButtonPrimary>
 
 
-          <ButtonPrimary
+          {/* Feature de "Enviar meus Contatos" desabilitada — fora do escopo do
+              módulo de Pets. Para reativar, basta descomentar o botão abaixo. */}
+          {/* <ButtonPrimary
             onClick={handleSendMyContacts}
             colorScheme={colorScheme}
             style={{ color: luminosity > 128 ? '#01302F' : colorScheme }}
@@ -246,7 +248,7 @@ export default function Profile(props: ProfileProps) {
             disabled={isSendContactBlocked}
           >
             Enviar meus Contatos
-          </ButtonPrimary>
+          </ButtonPrimary> */}
 
           {/* <ButtonPrimary
             variant="secondary"

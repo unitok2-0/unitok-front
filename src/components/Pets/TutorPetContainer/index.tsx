@@ -26,9 +26,9 @@ export function TutorPetContainer({
 
   function isHaveNameInTutor() {
 
-    if (typeof tutor?.tutorId?.surname !== 'undefined') {
-      return `${tutor?.tutorId?.full_name} ${tutor?.tutorId?.surname}`;
-    } else if(tutor?.tutorId?.full_name) {
+    // full_name já é salvo com o sobrenome incluso (ver profile/edit.tsx), então
+    // não deve ser concatenado com surname aqui de novo — isso duplicava o sobrenome.
+    if (tutor?.tutorId?.full_name) {
       return tutor?.tutorId?.full_name;
     } else {
       if (user?._id === tutor?.tutorId?._id)

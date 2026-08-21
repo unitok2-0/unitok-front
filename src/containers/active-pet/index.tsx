@@ -179,8 +179,8 @@ export default function ActivePetContainer({
       setLoading(false);
 
       if (response && response.passwordIsValid) {
-        await handleActivePet(QRCODE);
-        return true;
+        const activated = await handleActivePet(QRCODE);
+        return activated;
       }
 
       toast.warning("Código de ativação inválido!");
@@ -193,8 +193,10 @@ export default function ActivePetContainer({
   async function handleActivePet(qrcode: string) {
     try {
       await createPet({ qrcode });
+      return true;
     } catch (error) {
-      toast.warning(error)
+      toast.error(error?.response?.data?.error || "Não foi possível ativar o pet. Tente novamente.");
+      return false;
     }
   }
 
