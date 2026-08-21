@@ -207,6 +207,7 @@ export default function EditProfilePet({ petData }: ProfilePetProps) {
         });
       }, 300);
     } catch (error) {
+      setloadingAddImage(false);
       toast.error("Falha ao tentar atualizar imagem!", {
         position: "top-right",
         autoClose: 4000,
