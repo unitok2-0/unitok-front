@@ -48,6 +48,7 @@ export function ModalPetSOS({
   const [isTutorsIsOwner, setIsTutorsIsOwner] = useState<boolean>();
   const [permissionState, setPermissionState] = useState<String>('denied');
   const [isMobile, setIsMobile] = useState<Boolean>(false)
+  const [isSharingLocation, setIsSharingLocation] = useState<boolean>(false);
 
   const { user } = useAuth();
 
@@ -58,6 +59,7 @@ export function ModalPetSOS({
       setValue('phone', '');
       setValue('email', '');
       setValue('name', '');
+      setIsSharingLocation(false);
     }
   }, [modalIsOpen])
 
@@ -98,6 +100,8 @@ export function ModalPetSOS({
 
   async function saveAddress() {
 
+    setIsSharingLocation(true);
+
     try {
       // O endereço é resolvido no backend (Geocoding API não aceita chave
       // restrita por HTTP referrer, então precisa de uma chave server-side
@@ -122,6 +126,8 @@ export function ModalPetSOS({
         return true;
       }
     });
+
+    setIsSharingLocation(false);
 
     if (existIsTutorOwner) {
       return setStep(4);
@@ -380,6 +386,8 @@ export function ModalPetSOS({
                   }}
                   textButton="Compartilhar"
                   onClick={saveAddress}
+                  loading={isSharingLocation}
+                  disabled={isSharingLocation}
                 />
 
               </div>

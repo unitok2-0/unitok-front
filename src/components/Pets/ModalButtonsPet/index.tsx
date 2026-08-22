@@ -86,8 +86,10 @@ export function ModalButtonsPet({
         </Text>
 
         {buttons.map((button, index) => (
-          // WhatsApp oculto visualmente (não usamos mais o canal) — mantido no array pra não afetar índices/estado dos outros botões.
-          button.type === 'whatsapp' ? null :
+          // WhatsApp e Ligação ocultos visualmente (canais desativados; SMS é o padrão e obrigatório) —
+          // mantidos no array pra não afetar índices/estado dos outros botões. "Ligação" controla o
+          // toggle phone.enable (chamada via Twilio), que é independente do disparo de SMS (sempre ativo).
+          button.type === 'whatsapp' || button.type === 'phone' ? null :
           <S.ContainerButton key={index} isActive={button.active}>
 
             <div className="icon">
