@@ -18,7 +18,23 @@ interface WelcomeProps {
 
 const Welcome: React.FC<WelcomeProps> = ({ handleNextButton, deviceType, teamsUser }) => {
   const url = teamsUser ? getImageUrl(teamsUser?.logoImage) : '/assets/default_logo.svg'
-  console.log(teamsUser)
+
+  // Só é possível ativar dispositivos PETS hoje — outros tipos de QR code
+  // (CARD, TAG, STICKER) caem nessa mensagem em vez do fluxo de ativação.
+  if (deviceType !== "PETS") {
+    return (
+      <Container>
+        {teamsUser && <Avatar imageUrl={url} />}
+        <span>
+          <Title>Olá!</Title>
+
+          <Text>
+            Esse serviço está indisponível no momento.
+          </Text>
+        </span>
+      </Container>
+    )
+  }
 
   return (
     <Container>
@@ -29,16 +45,7 @@ const Welcome: React.FC<WelcomeProps> = ({ handleNextButton, deviceType, teamsUs
         <Title>Seja bem-vindo.</Title>
 
         <Text>
-          {deviceType === "PETS" &&
-            <>
-              {`Vamos ativar o seu pingente para \n você acessar o perfil do seu pet.`}
-            </>
-          }
-          {deviceType !== "PETS" &&
-            <>
-              {`Vamos ativar o seu Unitok e \n criar um login para acessar o seu perfil.`}
-            </>
-          }
+          {`Vamos ativar o seu pingente para \n você acessar o perfil do seu pet.`}
         </Text>
 
         <Text>

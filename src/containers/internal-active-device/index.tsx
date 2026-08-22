@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { addNewDevice } from "services/user";
+import { addNewDevice, getQrcode } from "services/user";
 import { useRouter } from 'next/router';
 
 import { ActivationCodeStep } from "./steps/activationCode";
+import { BlockedDeviceStep } from "./steps/blockedDevice";
 import { CongratulationsStep } from "./steps/congratulations";
 import { ReadQRCodeStep } from "./steps/readQRCode/index";
 import { WellcomeStep } from "./steps/wellcome";
@@ -33,9 +34,24 @@ export function InternalActivateDeviceContainer({ deviceType  = "CARD", onCloseA
 
   const jumpToPrevStep = () => setStep(current => current - 1);
 
-  const handleQRCodeReaded = (link: string) => {
+  const handleQRCodeReaded = async (link: string) => {
     const linkSplited = link.split('/');
-    setCodeId(linkSplited.pop());
+    const readCodeId = linkSplited.pop();
+    setCodeId(readCodeId);
+
+    try {
+      const qrcode = await getQrcode(readCodeId);
+
+      if (qrcode?.device_type !== "PETS") {
+        setStep(5);
+        return;
+      }
+    } catch (e) {
+      toast.error('Esse QR code não é válido');
+      onCloseActivationRequest && onCloseActivationRequest();
+      return;
+    }
+
     jumpToNextStep();
   }
 
@@ -77,9 +93,13 @@ export function InternalActivateDeviceContainer({ deviceType  = "CARD", onCloseA
           onValidationCodeValidated={handleValidationCodeValidated}
         />}
 
-        {step === 4 && <CongratulationsStep 
+        {step === 4 && <CongratulationsStep
           deviceType={activatedDevice?.device_type || deviceType}
           onPushToProfileClick={handlePushToProfileClick}
+        />}
+
+        {step === 5 && <BlockedDeviceStep
+          onBackClick={onCloseActivationRequest}
         />}
       </S.Content>
     </S.Container>
