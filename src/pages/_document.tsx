@@ -43,7 +43,7 @@ export default class MyDocument extends Document {
         <Head>
 
           <meta property="og:title" content="Unitok" />
-          <meta property="og:description" content="Cartão de visita digital, todas as formas de contato com você em um único lugar" />
+          <meta property="og:description" content="Identificação digital para o seu pet: QR code, localização e aviso imediato caso ele seja encontrado" />
           <meta property="og:image" content="https://www.unitok.com/assets/Unitok_share-Thumb.png" />
           <meta property="og:image:type" content="image/png" />
           <meta property="og:image:width" content="800" />
@@ -66,7 +66,7 @@ export default class MyDocument extends Document {
           <meta name="theme-color" content="#ffffff" />
 
 
-          <meta name="description" content="Cartão de visita digital, todas as formas de contato com você em um único lugar" />
+          <meta name="description" content="Identificação digital para o seu pet: QR code, localização e aviso imediato caso ele seja encontrado" />
           <link
             rel="preload"
             href="/fonts/GT-Maru-Light.woff2"
