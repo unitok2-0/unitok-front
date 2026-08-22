@@ -23,6 +23,7 @@ import {
   updateProfileUser,
 } from "services/user";
 import destroyAllCookies from "utils/conarh2022/destroyAllCookies";
+import { identifyClarityUser } from "lib/clarity";
 
 const initialCardsData = [
   {
@@ -158,6 +159,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     onGetUserFunction();
   }, []);
+
+  useEffect(() => {
+    if (user?._id) {
+      identifyClarityUser(user._id);
+    }
+  }, [user?._id]);
 
   async function updateSignUpFormData(propety: SignUpFormDataProps) {
     let objPropetys = propety;
