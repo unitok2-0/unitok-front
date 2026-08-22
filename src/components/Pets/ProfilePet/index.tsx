@@ -158,9 +158,11 @@ export function ProfilePet({
 
           </S.PetInformation>
 
+          {pet?.gallery?.length > 0 && (
           <Heading>
             Galeria
           </Heading>
+          )}
 
           <S.PetPhotos>
             {pet?.gallery?.map(photo => (

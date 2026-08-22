@@ -98,19 +98,22 @@ export default function MyPets() {
             <ButtonPrimary onClick={() => setInitActivePet(true)}>
               Adicionar novo pingente
             </ButtonPrimary>
-            <ButtonPrimary
-              as="a"
-              href="https://api.whatsapp.com/send?phone=5508004550800"
-              target="_blank"
-              styleProp={{
-                marginTop: '1.8rem',
-                color: '#01302F'
-              }}
-              variant="tertiary"
-              rightElement={<FiShoppingBag />}
-            >
-              Adquirir novo pingente
-            </ButtonPrimary>
+            {/* "Adquirir novo pingente" oculto visualmente — opção e link de WhatsApp não existem mais, mas mantidos no código. */}
+            {false && (
+              <ButtonPrimary
+                as="a"
+                href="https://api.whatsapp.com/send?phone=5508004550800"
+                target="_blank"
+                styleProp={{
+                  marginTop: '1.8rem',
+                  color: '#01302F'
+                }}
+                variant="tertiary"
+                rightElement={<FiShoppingBag />}
+              >
+                Adquirir novo pingente
+              </ButtonPrimary>
+            )}
           </S.ButtonsWrapper>
 
           {myPets?.length >= 1 &&

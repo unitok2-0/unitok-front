@@ -1,4 +1,4 @@
-import { getImageUrl } from 'constants/functions';
+import { DEFAULT_IMAGE_PLACEHOLDER, getImageUrl } from 'constants/functions';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import * as S from './styles';
@@ -51,7 +51,7 @@ export function ContainerTutorCheckbox({
         </S.Checkbox>
 
         <S.ImgContainer
-          img_src={getImageUrl(tutor?.userImage)}
+          img_src={getImageUrl(tutor?.userImage) || DEFAULT_IMAGE_PLACEHOLDER}
         />
 
         <S.Name>

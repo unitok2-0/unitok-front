@@ -86,6 +86,8 @@ export function ModalButtonsPet({
         </Text>
 
         {buttons.map((button, index) => (
+          // WhatsApp oculto visualmente (não usamos mais o canal) — mantido no array pra não afetar índices/estado dos outros botões.
+          button.type === 'whatsapp' ? null :
           <S.ContainerButton key={index} isActive={button.active}>
 
             <div className="icon">

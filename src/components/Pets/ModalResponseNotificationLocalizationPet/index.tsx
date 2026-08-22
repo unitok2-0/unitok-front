@@ -102,7 +102,7 @@ export function ModalResponseNotificationLocalizationPet({
           Seu pet foi encontrado!
         </Heading>
 
-        <S.PhotoPet petImage={getImageUrl(petImage)}>
+        <S.PhotoPet petImage={getImageUrl(petImage) || '/assets/icon_default_avatar_pet.png'}>
           {/* <img src={getImageUrl(petImage)} alt="Foto de Pet" /> */}
         </S.PhotoPet>
 
