@@ -68,7 +68,7 @@ export default function ResetPassword<ResetPasswordProps>({ token }) {
           {changed ? (
             <>
               <Heading>Senha alterada!</Heading>
-              <Text>Vamos logar com email e com nova senha...</Text>
+              <Text>Vamos logar com seu telefone e a nova senha...</Text>
               <ButtonPrimary
                 loading={isSubmitting}
                 type="button"
